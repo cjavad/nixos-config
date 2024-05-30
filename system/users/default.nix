@@ -12,7 +12,7 @@
       javad = {
         isNormalUser = true;
         description = "Javad Asgari Shafique";
-        extraGroups = [ "networkmanager" "wheel" ];
+        extraGroups = [ "networkmanager" "wheel" "audio" "video"  ];
         useDefaultShell = true;
       };
     };

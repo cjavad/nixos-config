@@ -7,6 +7,7 @@
     ./nvidia
   ];
 
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -21,14 +22,30 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  security.polkit.enable = true;
+  programs.light.enable = true; 
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable gnome
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.sddm.enable = true;
 
-  environment.gnome.excludePackages = [ pkgs.epiphany ];
+  programs.hyprland = { # we use this instead of putting it in systemPackages/users  
+    enable = true;  
+    xwayland.enable = true;
+    # nvidiaPatches = true; # ONLY use this line if you have an nvidia card  
+  };
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1"; # This variable fixes electron apps in wayland
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+
+  hardware.opengl = {  
+    enable = true;  
+    driSupport = true;  
+    driSupport32Bit = true;  
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -85,6 +102,4 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-
 }
